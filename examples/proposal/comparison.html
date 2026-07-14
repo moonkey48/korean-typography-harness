@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>Before / After 비교</title>
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; background: #eef0f4;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", sans-serif;
+    padding: 56px 64px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .head { text-align: center; margin-bottom: 44px; }
+  .head h1 { font-size: 52px; font-weight: 700; color: #111827; letter-spacing: 0; }
+  .head p { font-size: 30px; color: #4B5563; margin-top: 14px; }
+  .row { display: flex; gap: 40px; align-items: flex-start; }
+  .col { flex: 1; }
+  .tag { display: inline-flex; align-items: center; gap: 10px; font-size: 30px; font-weight: 700; margin-bottom: 18px; padding: 8px 20px; border-radius: 999px; }
+  .tag.before { background: #FEE2E2; color: #B91C1C; }
+  .tag.after  { background: #DCFCE7; color: #047857; }
+  .shot { width: 100%; border-radius: 14px; display: block; box-shadow: 0 12px 40px rgba(0,0,0,0.18); border: 1px solid #d7dae2; }
+  .cap { font-size: 24px; color: #6B7280; margin-top: 16px; line-height: 1.5; }
+  .cap b { color: #374151; font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <h1>같은 내용, 같은 데이터 — 규칙만 바꿨습니다</h1>
+    <p>제안서 슬라이드 · <b>korean-typography-harness</b> 적용 전후</p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span class="tag before">✕ Before</span>
+      <img class="shot" src="before.png" alt="before" />
+      <p class="cap">본문 <b>14px</b> · 회색 글씨 · 중앙/양끝 정렬 · <b>자간 0.5px</b> · 어절 중간 꺾임 · 불릿 7개 · 작은 KPI</p>
+    </div>
+    <div class="col">
+      <span class="tag after">✓ After</span>
+      <img class="shot" src="after.png" alt="after" />
+      <p class="cap">본문 <b>36px(18pt)</b> · #111 진한 글씨 · 좌측정렬 · <b>자간 0</b> · <b>keep-all</b> · 불릿 3개 · 대형 KPI 카드</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>제안서 슬라이드 — After (korean-typography-harness 적용)</title>
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  /* ✅ korean-proposal-slides 규칙 적용 — 근거: korean-design-foundation 토큰.
+     1920×1080 · 1pt=2px · 본문 36px(18pt) · 줄간격 1.5 · 자간 0 · 좌측정렬 ·
+     keep-all · 96/64 세이프 마진 · 정본 색 · KPI 카드(대형 tabular 수치+화살표 delta). */
+  :root {
+    --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+                 "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    --text-primary: #111111;
+    --text-secondary: #4B5563;
+    --text-tertiary: #6B7280;   /* 캡션/비활성만 */
+    --surface: #FFFFFF;
+    --surface-muted: #F7F8FA;
+    --focus: #2563EB;
+    --up: #059669;
+    --pad-x: 96px; --pad-y: 64px; --gutter: 24px;
+    --radius-lg: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b0b0c; }
+
+  .stage {
+    width: 1920px; height: 1080px; position: relative;
+    background: var(--surface);
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    padding: var(--pad-y) var(--pad-x);       /* ✅ 96/64 세이프 마진 */
+    display: flex; flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all; overflow-wrap: break-word;  /* ✅ 어절 중간 꺾임 방지 */
+    overflow: hidden;
+  }
+
+  /* ✅ eyebrow 36px(18pt) · focus 색 · 자간 0 · 대문자 강요 없음 */
+  .eyebrow { font-size: 36px; font-weight: 500; color: var(--focus); line-height: 1.4; }
+  /* ✅ 슬라이드 제목 64px(32pt) · 줄간격 1.4 · 자간 0 · 좌측정렬 · 행 길이 통제 */
+  .title { font-size: 64px; font-weight: 700; line-height: 1.4; margin-top: 16px; max-width: 30ch; }
+
+  .body-grid { flex: 1; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); margin-top: 48px; align-items: start; }
+  .col-7 { grid-column: span 7; }
+  .col-5 { grid-column: span 5; }
+
+  /* ✅ 본문 36px(18pt) · 줄간격 1.5 · #111 · BodyBlock 행 길이 28ch */
+  .lead { font-size: 36px; font-weight: 400; line-height: 1.5; color: var(--text-primary); max-width: 28ch; }
+
+  /* ✅ 불릿 3개 · 36px · 사각 focus 불릿 */
+  ul.bullets { list-style: none; margin-top: 36px; }
+  ul.bullets li {
+    position: relative; padding-left: 40px; margin-bottom: 24px;
+    font-size: 36px; line-height: 1.35; color: var(--text-primary); max-width: 30ch;
+  }
+  ul.bullets li::before {
+    content: ""; position: absolute; left: 6px; top: 0.5em;
+    width: 14px; height: 14px; border-radius: 4px; background: var(--focus);
+  }
+
+  /* ✅ KPI 카드 3개 스택 — 대형 tabular 수치 + 화살표+색 delta + 도움말 */
+  .kpi-stack { display: flex; flex-direction: column; gap: var(--gutter); }
+  .kpi-card { background: var(--surface-muted); border-radius: var(--radius-lg); padding: 28px 32px; }
+  .kpi-eyebrow { font-size: 28px; font-weight: 500; color: var(--text-secondary); }
+  .kpi-metric { font-size: 76px; font-weight: 700; line-height: 1.15; letter-spacing: 0;
+    font-variant-numeric: tabular-nums; margin: 4px 0 6px; }
+  .kpi-metric .unit { font-size: 0.5em; font-weight: 700; }
+  .kpi-delta { font-size: 28px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+  .kpi-delta.up { color: var(--up); }
+  .kpi-delta.down { color: var(--focus); }
+
+  .footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 24px; }
+  .caption { font-size: 28px; color: var(--text-tertiary); line-height: 1.45; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <header>
+      <p class="eyebrow">기대 효과</p>
+      <h2 class="title">콘텐츠 제작 시간을 82% 줄이고, 캠페인 반응률을 2.4배 높입니다</h2>
+    </header>
+
+    <div class="body-grid">
+      <div class="col-7">
+        <p class="lead">
+          AI가 브랜드 톤에 맞춰 카피·이미지·영상을 자동으로 만들고, 지난 캠페인 성과를 학습해
+          반응률 높은 소재를 먼저 추천합니다.
+        </p>
+        <ul class="bullets">
+          <li>카피·이미지·영상을 한 번에 자동 생성</li>
+          <li>브랜드 가이드에 맞춘 톤·색·폰트 자동 적용</li>
+          <li>캠페인 성과를 학습해 소재를 자동 최적화</li>
+        </ul>
+      </div>
+
+      <div class="col-5">
+        <div class="kpi-stack">
+          <div class="kpi-card">
+            <p class="kpi-eyebrow">콘텐츠 제작 시간</p>
+            <p class="kpi-metric">82<span class="unit">%</span></p>
+            <p class="kpi-delta down">▼ 감소</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-eyebrow">평균 캠페인 반응률</p>
+            <p class="kpi-metric">2.4<span class="unit">배</span></p>
+            <p class="kpi-delta up">▲ 상승</p>
+          </div>
+          <div class="kpi-card">
+            <p class="kpi-eyebrow">배포 리드타임 (기존 3일)</p>
+            <p class="kpi-metric">4<span class="unit">시간</span></p>
+            <p class="kpi-delta down">▼ 단축</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="caption">AI 마케팅 콘텐츠 자동화 솔루션 제안</span>
+      <span class="caption">2 / 8</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -36,6 +36,41 @@ AI에게 통째로 심어 놨어요. 이제 여러분은 규칙을 몰라도, AI
 
 ---
 
+## 📸 적용 예시 — Before / After
+
+백문이 불여일견. **똑같은 제안서 슬라이드**(같은 내용·같은 데이터)에 규칙만 적용한 결과예요.
+
+![Before와 After 비교 — 같은 내용, 규칙만 적용](examples/proposal/comparison.png)
+
+무엇이 달라졌나요:
+
+| | ✕ Before | ✓ After |
+|---|---|---|
+| 본문 글씨 | 14px (뒷자리에서 안 읽힘) | **36px (18pt)** |
+| 글자 색 | 흐린 회색 | 진한 먹색 (`#111`) |
+| 정렬 | 중앙·양끝 (들쭉날쭉) | 왼쪽 정렬 |
+| 자간 | 0.5px (성김) | 0 |
+| 줄바꿈 | 어절 중간에서 꺾임 | `keep-all` (단어 안 잘림) |
+| 정보량 | 불릿 7개 (과다) | 3개로 압축 |
+| 지표(KPI) | 작고 색만 | 대형 수치 + 화살표 |
+
+<details>
+<summary>각 화면 크게 보기 (풀 1920×1080)</summary>
+
+**✕ Before — 외국 템플릿에 한글만 부은 상태**
+
+![before](examples/proposal/before.png)
+
+**✓ After — korean-typography-harness 적용**
+
+![after](examples/proposal/after.png)
+
+</details>
+
+> 이 예시는 재현 가능해요 — 원본 HTML은 [`examples/proposal/`](examples/proposal/)에 있습니다.
+
+---
+
 ## 🙋 이런 분께 도움이 됩니다
 
 - 📄 한글 **홈페이지·랜딩페이지**를 만들었는데 어딘가 촌스러워 보이는 분
