@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>마케팅 대시보드 — After (korean-typography-harness 적용)</title>
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  /* ✅ korean-web-layout + korean-dataviz 규칙 적용 (웹 대시보드 스케일).
+     본문 16px · 줄간격 1.6 · 자간 0 · keep-all · 카드 간격 24px · KPI 36px ·
+     차트 직접 라벨링·시리즈 focus 1색 · 표 숫자 우정렬+tabular-nums · 정본 색. */
+  :root {
+    --font: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    --text-primary: #111827; --text-secondary: #4B5563; --text-tertiary: #6B7280;
+    --surface: #FFFFFF; --page: #F3F4F6; --border: #E5E7EB;
+    --focus: #2563EB; --up: #059669; --down: #DC2626; --muted: #CBD5E1;
+    --r: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1440px; background: var(--page); font-family: var(--font);
+    color: var(--text-primary); -webkit-font-smoothing: antialiased;
+    word-break: keep-all; overflow-wrap: break-word;   /* ✅ 어절 안 잘림 */
+  }
+
+  /* 앱바 */
+  .appbar { height: 64px; background: var(--surface); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 32px; padding: 0 32px; }
+  .brand { font-size: 18px; font-weight: 700; }
+  .brand .dot { color: var(--focus); }
+  .nav { display: flex; gap: 24px; margin-left: 8px; }
+  .nav a { font-size: 16px; color: var(--text-secondary); text-decoration: none; padding: 4px 0; }
+  .nav a.on { color: var(--text-primary); font-weight: 600; border-bottom: 2px solid var(--focus); }
+  .appbar .spacer { flex: 1; }
+  .chip { font-size: 15px; color: var(--text-secondary); background: var(--page);
+    border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; }
+
+  .page { padding: 32px; }
+  .page-head { margin-bottom: 24px; }
+  .page-head h1 { font-size: 28px; font-weight: 700; }              /* ✅ 뚜렷한 최상위 위계 */
+  .page-head p { font-size: 16px; color: var(--text-secondary); margin-top: 6px; line-height: 1.6; }
+
+  /* KPI 4개 — 큰 수치 + 화살표 delta */
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 24px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); }
+  .kpi { padding: 24px; }
+  .kpi .label { font-size: 15px; color: var(--text-secondary); }
+  .kpi .value { font-size: 36px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 8px 0 6px; letter-spacing: 0; }
+  .kpi .delta { font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+  .delta.up { color: var(--up); } .delta.down { color: var(--down); }
+
+  .row2 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
+  .panel { padding: 24px; }
+  .panel .ptitle { font-size: 18px; font-weight: 700; }
+  .panel .psub { font-size: 14px; color: var(--text-tertiary); margin-top: 4px; }
+
+  /* 차트: 직접 라벨링 · focus 1색 · gridline 없음(값을 막대 위에 직접) */
+  .chart { display: flex; align-items: flex-end; gap: 20px; height: 240px; margin-top: 24px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .bar-col .v { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+  .bar-col .bar { width: 100%; max-width: 56px; background: var(--focus); border-radius: 6px 6px 0 0; }
+  .bar-col .d { font-size: 14px; color: var(--text-secondary); margin-top: 12px; }
+
+  /* 채널 리스트 (직접 라벨) */
+  .chan { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .chan .item { }
+  .chan .item .top { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 8px; }
+  .chan .item .top .name { color: var(--text-secondary); }
+  .chan .item .top .pct { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chan .item .track { height: 10px; background: var(--page); border-radius: 999px; overflow: hidden; }
+  .chan .item .fill { height: 100%; background: var(--focus); border-radius: 999px; }
+
+  /* 표: 숫자 우정렬 + tabular-nums · 세로선 없음 · 넉넉한 행 */
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+  thead th { font-size: 14px; color: var(--text-secondary); font-weight: 600; text-align: right;
+    padding: 12px 16px; border-bottom: 2px solid var(--border); }
+  thead th:first-child { text-align: left; }
+  tbody td { font-size: 15px; padding: 16px; border-bottom: 1px solid var(--border);
+    text-align: right; font-variant-numeric: tabular-nums; }
+  tbody td:first-child { text-align: left; font-weight: 600; }
+  tbody td .pos { color: var(--up); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="appbar">
+    <span class="brand">Ad<span class="dot">·</span>Insight</span>
+    <nav class="nav"><a class="on">대시보드</a><a>캠페인</a><a>리포트</a></nav>
+    <span class="spacer"></span>
+    <span class="chip">기간: 최근 30일 ▾</span>
+  </div>
+
+  <div class="page">
+    <div class="page-head">
+      <h1>마케팅 성과 대시보드</h1>
+      <p>2026년 6월 15일 – 7월 14일 · 전체 캠페인 기준</p>
+    </div>
+
+    <div class="kpi-row">
+      <div class="card kpi"><p class="label">총 노출수</p><p class="value">3,240,912</p><p class="delta up">▲ 12.4%</p></div>
+      <div class="card kpi"><p class="label">클릭수</p><p class="value">82,450</p><p class="delta up">▲ 8.1%</p></div>
+      <div class="card kpi"><p class="label">전환율</p><p class="value">4.8%</p><p class="delta down">▼ 0.3%p</p></div>
+      <div class="card kpi"><p class="label">ROAS</p><p class="value">380%</p><p class="delta up">▲ 24%p</p></div>
+    </div>
+
+    <div class="row2">
+      <div class="card panel">
+        <p class="ptitle">일별 전환 추이</p>
+        <p class="psub">최근 7일 · 전환 건수</p>
+        <div class="chart">
+          <div class="bar-col"><span class="v">320</span><div class="bar" style="height:47%"></div><span class="d">월</span></div>
+          <div class="bar-col"><span class="v">410</span><div class="bar" style="height:60%"></div><span class="d">화</span></div>
+          <div class="bar-col"><span class="v">380</span><div class="bar" style="height:56%"></div><span class="d">수</span></div>
+          <div class="bar-col"><span class="v">520</span><div class="bar" style="height:76%"></div><span class="d">목</span></div>
+          <div class="bar-col"><span class="v">610</span><div class="bar" style="height:90%"></div><span class="d">금</span></div>
+          <div class="bar-col"><span class="v">590</span><div class="bar" style="height:87%"></div><span class="d">토</span></div>
+          <div class="bar-col"><span class="v">680</span><div class="bar" style="height:100%"></div><span class="d">일</span></div>
+        </div>
+      </div>
+      <div class="card panel">
+        <p class="ptitle">채널별 전환 비중</p>
+        <p class="psub">최근 30일</p>
+        <div class="chan">
+          <div class="item"><div class="top"><span class="name">검색 광고</span><span class="pct">42%</span></div><div class="track"><div class="fill" style="width:42%"></div></div></div>
+          <div class="item"><div class="top"><span class="name">소셜 피드</span><span class="pct">31%</span></div><div class="track"><div class="fill" style="width:31%"></div></div></div>
+          <div class="item"><div class="top"><span class="name">리타겟팅</span><span class="pct">18%</span></div><div class="track"><div class="fill" style="width:18%"></div></div></div>
+          <div class="item"><div class="top"><span class="name">기타</span><span class="pct">9%</span></div><div class="track"><div class="fill" style="width:9%"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <p class="ptitle">캠페인별 성과</p>
+      <table>
+        <thead><tr><th>캠페인</th><th>노출수</th><th>클릭수</th><th>전환</th><th>전환율</th><th>광고비</th><th>ROAS</th></tr></thead>
+        <tbody>
+          <tr><td>여름 시즌 프로모션</td><td>1,240,300</td><td>34,210</td><td>1,820</td><td>5.3%</td><td>₩4,200,000</td><td class="pos">420%</td></tr>
+          <tr><td>리타겟팅 · 장바구니</td><td>620,400</td><td>18,900</td><td>1,120</td><td>5.9%</td><td>₩2,400,000</td><td class="pos">510%</td></tr>
+          <tr><td>신규 가입 유도</td><td>890,120</td><td>21,050</td><td>940</td><td>4.5%</td><td>₩3,100,000</td><td>350%</td></tr>
+          <tr><td>브랜드 인지도</td><td>490,092</td><td>8,290</td><td>210</td><td>2.5%</td><td>₩2,700,000</td><td>190%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -38,12 +38,12 @@ AI에게 통째로 심어 놨어요. 이제 여러분은 규칙을 몰라도, AI
 
 ## 📸 적용 예시 — Before / After
 
-백문이 불여일견. **똑같은 제안서 슬라이드**(같은 내용·같은 데이터·같은 폰트·같은 레이아웃)에 규칙만 적용한 결과예요.
-어긋난 건 **거창한 게 아니라** — 요소 사이 간격, 행간·자간, 그리고 위계(글씨 크기 대비)예요.
+백문이 불여일견. 아래는 **내용·데이터·폰트·레이아웃을 똑같이 두고** 규칙만 적용한 결과예요.
+어긋난 건 **거창한 게 아니라** — 요소 사이 간격, 행간·자간, 위계(글씨 크기 대비), 그리고 차트·표를 다루는 방식이에요.
 
-![Before와 After 비교 — 같은 내용, 규칙만 적용](examples/proposal/comparison.png)
+### 예시 1 · 제안서 슬라이드
 
-무엇이 달라졌나요:
+![제안서 Before와 After 비교](examples/proposal/comparison.png)
 
 | | ✕ Before | ✓ After |
 |---|---|---|
@@ -59,15 +59,41 @@ AI에게 통째로 심어 놨어요. 이제 여러분은 규칙을 몰라도, AI
 
 **✕ Before — 제대로 만든 듯하지만 간격·행간·자간·위계가 어긋난 상태**
 
-![before](examples/proposal/before.png)
+![슬라이드 before](examples/proposal/before.png)
 
 **✓ After — korean-typography-harness 적용**
 
-![after](examples/proposal/after.png)
+![슬라이드 after](examples/proposal/after.png)
 
 </details>
 
-> 이 예시는 재현 가능해요 — 원본 HTML은 [`examples/proposal/`](examples/proposal/)에 있습니다.
+### 예시 2 · 마케팅 대시보드
+
+![대시보드 Before와 After 비교](examples/dashboard/comparison.png)
+
+| | ✕ Before | ✓ After |
+|---|---|---|
+| 지표(KPI) 숫자 | 24px — 작아서 안 띔 | **36px** — 한눈에 |
+| 표 숫자 정렬 | 가운데 정렬 (자릿수 어긋남) | **오른쪽 정렬 + 고정폭 숫자** |
+| 표 모양 | 세로 구분선으로 갇힘 | 가로선만 (숨통) |
+| 차트 값 읽기 | 격자선·범례로 눈 왕복 | **막대 위 직접 라벨** |
+| 본문/행간 | 12~13px · 1.25 | 15~16px · 1.6 |
+| 카드 간격 | 촘촘 | 넉넉 (24px) |
+
+<details>
+<summary>각 화면 크게 보기 (풀 1440px)</summary>
+
+**✕ Before — 작은 위계 · 격자선 차트 · 가운데정렬 표**
+
+![대시보드 before](examples/dashboard/before.png)
+
+**✓ After — korean-typography-harness 적용**
+
+![대시보드 after](examples/dashboard/after.png)
+
+</details>
+
+> 두 예시 모두 재현 가능해요 — 원본 HTML은 [`examples/`](examples/)에 있습니다.
 
 ---
 
