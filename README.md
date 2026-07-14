@@ -215,8 +215,6 @@ AI에게 통째로 심어 놔서 harness로 구축했어요.
 
 일부 스킬에 `agents/openai.yaml`이 포함돼 Codex/OpenAI 에이전트에서도 쓸 수 있어요.
 
-</details>
-
 ---
 
 ## English summary
