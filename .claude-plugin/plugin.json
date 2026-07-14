@@ -1,0 +1,24 @@
+{
+  "name": "korean-typography-harness",
+  "description": "한글 UI를 자연스럽고 심미성 높게 만드는 디자인 하네스 — 근거 기반 타이포·간격·색·대비 규칙(SSOT foundation) + 레이아웃·토큰·차트·제안서·콘텐츠·검수 스킬 + 안티-슬롭(bamti-removal)과 히어로 아트디렉션, 그리고 이를 조율하는 6인 에이전트 팀. Korean typography & design harness for Claude Code.",
+  "version": "0.1.0",
+  "author": {
+    "name": "moonkey48",
+    "url": "https://github.com/moonkey48"
+  },
+  "homepage": "https://github.com/moonkey48/korean-typography-harness",
+  "repository": "https://github.com/moonkey48/korean-typography-harness",
+  "license": "MIT",
+  "keywords": [
+    "korean",
+    "hangul",
+    "typography",
+    "design-system",
+    "design-tokens",
+    "claude-skills",
+    "claude-code",
+    "ui",
+    "accessibility",
+    "anti-slop"
+  ]
+}

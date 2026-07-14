@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 에디터/툴
+.vscode/
+.idea/
+*.swp
+*~
+
+# Claude Code 로컬 설정 (사용자 환경 전용)
+.claude/settings.local.json
+
+# 토큰 빌드 산출물 (korean-design-tokens/scripts/build-tokens.sh 결과)
+build/
+node_modules/
+*.log

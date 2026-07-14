@@ -1,0 +1,162 @@
+/**
+ * Korean Design — CSS 변수 토큰
+ * ---------------------------------------------------------------------------
+ * SSOT: ../../korean-design-foundation/references/tokens.dtcg.json
+ * Tailwind 를 쓰지 않는 표면(순수 CSS·바닐라·서드파티 위젯·이메일 등)에서 import 한다.
+ * 값은 DTCG 에서 온다. 손으로 바꾸지 말 것.
+ *
+ * 명명: --fs-*(크기) --lh-*(줄간격) --ls-*(자간) --sp-*(간격) --color-* --radius-* --bp-*
+ */
+
+:root {
+  /* font */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+    sans-serif;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* font-size (fs) */
+  --fs-caption: 13px;
+  --fs-label: 14px;
+  --fs-body: 17px;
+  --fs-body-dense: 15px;
+  --fs-title: 24px;
+  --fs-headline: 32px;
+  --fs-display: 44px;
+
+  /* line-height (lh) */
+  --lh-caption: 1.45;
+  --lh-label: 1.45;
+  --lh-body: 1.6;
+  --lh-body-dense: 1.5;
+  --lh-title: 1.45;
+  --lh-headline: 1.4;
+  --lh-display: 1.3;
+
+  /* letter-spacing / tracking (ls) */
+  --ls-caption: 0em;
+  --ls-label: 0em;
+  --ls-body: 0em;
+  --ls-body-dense: 0em;
+  --ls-title: 0em;
+  --ls-headline: 0em;
+  --ls-display: 0em;
+
+  /* space (sp) — 4/8 스케일. 숫자 = px */
+  --sp-4: 4px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-16: 16px;
+  --sp-24: 24px;
+  --sp-32: 32px;
+  --sp-40: 40px;
+  --sp-48: 48px;
+  --sp-64: 64px;
+
+  /* color — text */
+  --color-text-primary: #111111;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+
+  /* color — surface */
+  --color-surface-default: #ffffff;
+  --color-surface-muted: #f7f8fa;
+  --color-surface-elevated: #ffffff;
+
+  /* color — chart (categorical 4 + focus + muted) */
+  --color-chart-1: #2563eb;
+  --color-chart-2: #059669;
+  --color-chart-3: #d97706;
+  --color-chart-4: #7c3aed;
+  --color-chart-focus: #2563eb;
+  --color-chart-muted: #9ca3af;
+
+  /* radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* breakpoint (bp) — 참조용 값 */
+  --bp-sm: 360px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-xxl: 1440px;
+}
+
+/* 기본 문서 타입: 한글 본문은 16~17px 에서 시작한다 */
+html {
+  font-family: var(--font-sans);
+}
+body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--color-text-primary);
+  background: var(--color-surface-default);
+}
+
+/* 타입 역할 유틸 (예시) — raw px 대신 이 클래스를 쓴다 */
+.text-caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  letter-spacing: var(--ls-caption);
+}
+.text-label {
+  font-size: var(--fs-label);
+  line-height: var(--lh-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--fw-medium);
+}
+.text-body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+}
+.text-body-dense {
+  font-size: var(--fs-body-dense);
+  line-height: var(--lh-body-dense);
+  letter-spacing: var(--ls-body-dense);
+}
+.text-title {
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-title);
+  font-weight: var(--fw-bold);
+}
+.text-headline {
+  font-size: var(--fs-headline);
+  line-height: var(--lh-headline);
+  letter-spacing: var(--ls-headline);
+  font-weight: var(--fw-bold);
+}
+.text-display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
+  font-weight: var(--fw-bold);
+}
+
+/* 색 역할 유틸 (예시) */
+.text-primary {
+  color: var(--color-text-primary);
+}
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+.text-tertiary {
+  color: var(--color-text-tertiary);
+} /* 캡션·비활성 전용, 본문 금지 */
+.bg-surface {
+  background: var(--color-surface-default);
+}
+.bg-surface-muted {
+  background: var(--color-surface-muted);
+}
+
+/* 긴 본문 블록: 한글 행 길이(24~34자) 유지 */
+.page-copy {
+  max-width: 32rem;
+}

@@ -1,0 +1,124 @@
+// Korean Design — SCSS mixins
+// ---------------------------------------------------------------------------
+// SSOT: ../../korean-design-foundation/references/tokens.dtcg.json
+// SCSS 파이프라인에서 @use "mixins" as kd; 로 불러 쓴다.
+// 값은 DTCG 에서 온다. 손으로 바꾸지 말 것.
+//
+// 사용:
+//   @use "mixins" as kd;
+//   .lead   { @include kd.type(body); color: kd.$color-text-primary; }
+//   .card-h { @include kd.type(title); }
+//   .copy   { @include kd.page-copy; }        // 한글 24~34자 행 길이
+
+// --- 토큰 값 (DTCG 반영) --------------------------------------------------
+$font-sans: "Pretendard Variable", Pretendard, -apple-system,
+  BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+  sans-serif;
+
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-bold: 700;
+
+// 타입 스케일: role => (size, line-height, tracking, weight)
+$type: (
+  caption: (13px, 1.45, 0em, $fw-regular),
+  label: (14px, 1.45, 0em, $fw-medium),
+  body: (17px, 1.6, 0em, $fw-regular),
+  body-dense: (15px, 1.5, 0em, $fw-regular),
+  title: (24px, 1.45, 0em, $fw-bold),
+  headline: (32px, 1.4, 0em, $fw-bold),
+  display: (44px, 1.3, 0em, $fw-bold),
+);
+
+// space 스케일 (숫자 = px)
+$space: (
+  4: 4px,
+  8: 8px,
+  12: 12px,
+  16: 16px,
+  24: 24px,
+  32: 32px,
+  40: 40px,
+  48: 48px,
+  64: 64px,
+);
+
+// color
+$color-text-primary: #111111;
+$color-text-secondary: #4b5563;
+$color-text-tertiary: #6b7280; // 캡션·비활성 전용, 본문 금지
+$color-surface-default: #ffffff;
+$color-surface-muted: #f7f8fa;
+$color-surface-elevated: #ffffff;
+$color-chart-1: #2563eb;
+$color-chart-2: #059669;
+$color-chart-3: #d97706;
+$color-chart-4: #7c3aed;
+$color-chart-focus: #2563eb;
+$color-chart-muted: #9ca3af;
+
+// radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+
+// breakpoint
+$bp: (
+  sm: 360px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1440px,
+);
+
+// --- mixins ---------------------------------------------------------------
+
+// 하나의 타입 역할(크기+줄간격+자간+두께)을 한 번에 적용
+@mixin type($role) {
+  @if not map-has-key($type, $role) {
+    @error "알 수 없는 타입 역할: #{$role}. 허용: #{map-keys($type)}";
+  }
+  $t: map-get($type, $role);
+  font-family: $font-sans;
+  font-size: nth($t, 1);
+  line-height: nth($t, 2);
+  letter-spacing: nth($t, 3);
+  font-weight: nth($t, 4);
+}
+
+// 편의 별칭 — .foo { @include kd.type-body; }
+@mixin type-caption { @include type(caption); }
+@mixin type-label { @include type(label); }
+@mixin type-body { @include type(body); }
+@mixin type-body-dense { @include type(body-dense); }
+@mixin type-title { @include type(title); }
+@mixin type-headline { @include type(headline); }
+@mixin type-display { @include type(display); }
+
+// 4/8 스케일 간격 값 헬퍼 → padding: kd.sp(16) kd.sp(24);
+@function sp($step) {
+  @if not map-has-key($space, $step) {
+    @error "허용되지 않은 간격: #{$step}. 허용: #{map-keys($space)}";
+  }
+  @return map-get($space, $step);
+}
+
+// 정본 breakpoint 미디어쿼리 → @include kd.above(md) { ... }
+@mixin above($name) {
+  @if not map-has-key($bp, $name) {
+    @error "알 수 없는 breakpoint: #{$name}. 허용: #{map-keys($bp)}";
+  }
+  @media (min-width: map-get($bp, $name)) {
+    @content;
+  }
+}
+
+// 긴 본문 블록: 한글 24~34자 행 길이 유지 (기본 32rem)
+@mixin page-copy($max: 32rem) {
+  max-width: $max;
+}
+
+// 바로 쓰는 클래스 예시
+.page-copy {
+  @include page-copy;
+}

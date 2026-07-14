@@ -1,0 +1,4 @@
+interface:
+  display_name: "Korean Content Design"
+  short_description: "Review Hangul typography and Korean UI writing."
+  default_prompt: "Use this skill to review Korean UI text, Hangul layout, mixed Korean-English copy, and content design quality."

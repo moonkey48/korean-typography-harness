@@ -1,0 +1,8 @@
+interface:
+  display_name: "Bamti Removal"
+  short_description: "Remove AI-looking Korean UI design tells"
+  default_prompt: "Use $bamti-removal to audit this Korean UI for Bamti tells, remove the highest-impact issues, and verify the result."
+
+policy:
+  allow_implicit_invocation: true
+

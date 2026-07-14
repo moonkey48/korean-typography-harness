@@ -1,0 +1,66 @@
+{
+  "$description": "Korean Design 멀티플랫폼 토큰 빌드. source 는 foundation 의 정본 DTCG(SSOT). scripts/build-tokens.sh 가 skill 루트를 cwd 로 실행하므로 아래 경로는 그 기준의 상대경로다.",
+  "source": ["../korean-design-foundation/references/tokens.dtcg.json"],
+  "platforms": {
+    "css": {
+      "transformGroup": "css",
+      "buildPath": "build/css/",
+      "files": [
+        {
+          "destination": "tokens.css",
+          "format": "css/variables",
+          "options": { "outputReferences": true }
+        }
+      ]
+    },
+    "scss": {
+      "transformGroup": "scss",
+      "buildPath": "build/scss/",
+      "files": [
+        {
+          "destination": "_tokens.scss",
+          "format": "scss/variables"
+        }
+      ]
+    },
+    "js": {
+      "transformGroup": "js",
+      "buildPath": "build/js/",
+      "files": [
+        {
+          "destination": "tokens.js",
+          "format": "javascript/es6"
+        },
+        {
+          "destination": "tokens.d.ts",
+          "format": "typescript/es6-declarations"
+        }
+      ]
+    },
+    "ios": {
+      "transformGroup": "ios-swift",
+      "buildPath": "build/ios/",
+      "files": [
+        {
+          "destination": "KoreanDesignTokens.swift",
+          "format": "ios-swift/class.swift",
+          "options": { "className": "KoreanDesignTokens" }
+        }
+      ]
+    },
+    "android": {
+      "transformGroup": "android",
+      "buildPath": "build/android/",
+      "files": [
+        {
+          "destination": "colors.xml",
+          "format": "android/colors"
+        },
+        {
+          "destination": "dimens.xml",
+          "format": "android/dimens"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "korean-typography-harness",
+  "owner": {
+    "name": "moonkey48",
+    "url": "https://github.com/moonkey48"
+  },
+  "metadata": {
+    "description": "한글 타이포그래피·디자인 하네스 — 10 skills + 6 agents. Korean typography & design harness for Claude Code.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "korean-typography-harness",
+      "source": "./",
+      "description": "한글 UI를 자연스럽고 심미성 높게: SSOT foundation + layout/tokens/dataviz/proposal/content/checks + bamti-removal + hero art direction, 6인 에이전트 팀 포함.",
+      "version": "0.1.0"
+    }
+  ]
+}

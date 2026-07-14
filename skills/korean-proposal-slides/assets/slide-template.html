@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>한글 제안서 슬라이드 템플릿</title>
+
+<!-- Pretendard (foundation 폰트 스택 1순위) -->
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+<style>
+  /* =========================================================================
+     정본 토큰 — 근거: korean-design-foundation/references/tokens.dtcg.json
+     제안서 스케일: 1920×1080 스테이지에서 1pt = 2px (PowerPoint 16:9 동일 환산)
+     ========================================================================= */
+  :root {
+    /* 폰트 */
+    --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+                 "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-bold: 700;
+
+    /* 색 (foundation color 토큰) */
+    --text-primary: #111111;
+    --text-secondary: #4B5563;
+    --text-tertiary: #6B7280;   /* 본문 사용 금지 — 캡션/비활성만 */
+    --surface-default: #FFFFFF;
+    --surface-muted: #F7F8FA;
+    --chart-1: #2563EB;
+    --chart-2: #059669;
+    --chart-3: #D97706;
+    --chart-4: #7C3AED;
+    --chart-focus: #2563EB;
+    --chart-muted: #9CA3AF;
+
+    /* 반지름 */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    /* 슬라이드 기하 */
+    --slide-w: 1920px;
+    --slide-h: 1080px;
+    --pad-x: 96px;   /* 좌우 세이프 마진 */
+    --pad-y: 64px;   /* 상하 세이프 마진 */
+    --gutter: 24px;  /* 12컬럼 거터 */
+
+    /* 타입 스케일 — 제안서 pt를 1920 스테이지 px로 (1pt=2px) */
+    --fs-caption: 28px;    /* 14pt — 출처/각주, 최소한만 */
+    --fs-body: 36px;       /* 18pt — 배포/인쇄 본문 */
+    --fs-body-live: 48px;  /* 24pt — 라이브 발표 본문 */
+    --fs-h4: 36px;         /* 18pt — eyebrow/라벨 */
+    --fs-h3: 48px;         /* 24pt — 부제 (title 토큰) */
+    --fs-h2: 64px;         /* 32pt — 슬라이드 제목 (headline 토큰) */
+    --fs-h1: 88px;         /* 44pt — 표지 제목 (display 토큰) */
+    --fs-kpi: 104px;       /* KPI 대형 수치 */
+
+    /* line-height */
+    --lh-tight: 1.35;
+    --lh-body: 1.5;
+    --lh-title: 1.4;
+    --lh-display: 1.3;
+
+    /* tracking */
+    --tr-tight: 0em;        /* title/headline default */
+    --tr-tighter: 0em;      /* display default */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: #0b0b0c; /* 스테이지 바깥 레터박스 */
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* 뷰포트: 스테이지를 화면 중앙에 통째로 스케일 */
+  .viewport {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .stage {
+    position: relative;
+    width: var(--slide-w);
+    height: var(--slide-h);
+    transform-origin: center center;
+    /* JS가 --scale을 설정 */
+    transform: scale(var(--scale, 1));
+    background: var(--surface-default);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+  }
+
+  /* 슬라이드: 한 판씩 표시 */
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: var(--slide-w);
+    height: var(--slide-h);
+    padding: var(--pad-y) var(--pad-x);
+    display: none;
+    flex-direction: column;
+    background: var(--surface-default);
+  }
+  .slide.active { display: flex; }
+
+  /* 12컬럼 그리드 헬퍼 */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--gutter);
+  }
+  .col-7 { grid-column: span 7; }
+  .col-5 { grid-column: span 5; }
+  .col-8 { grid-column: span 8; }
+  .col-4 { grid-column: span 4; }
+
+  /* 타입 롤 */
+  .eyebrow {
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-medium);
+    color: var(--chart-focus);
+    line-height: var(--lh-title);
+  }
+  .h1 {
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-display);
+    letter-spacing: var(--tr-tighter);
+  }
+  .h2 {
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-title);
+    letter-spacing: var(--tr-tight);
+  }
+  .h3 {
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-title);
+    letter-spacing: var(--tr-tight);
+    color: var(--text-secondary);
+  }
+  .body {
+    font-size: var(--fs-body);
+    font-weight: var(--fw-regular);
+    line-height: var(--lh-body);
+    color: var(--text-primary);
+  }
+  /* BodyBlock: 행 길이 통제 (한글 24~34자) */
+  .body-block { max-width: 28ch; }
+  .caption {
+    font-size: var(--fs-caption);
+    line-height: 1.45;
+    color: var(--text-tertiary);
+  }
+
+  /* 불릿: 절제 (3~5개) */
+  ul.bullets { list-style: none; margin-top: 32px; }
+  ul.bullets li {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 24px;
+    font-size: var(--fs-body);
+    line-height: var(--lh-tight);
+    color: var(--text-primary);
+    max-width: 30ch;
+  }
+  ul.bullets li::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0.55em;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--chart-focus);
+  }
+
+  /* 슬라이드 헤더/푸터 */
+  .slide-title { margin-bottom: 40px; }
+  .slide-body { flex: 1; }
+  .slide-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 24px;
+  }
+  .slide-footer .caption { color: var(--text-tertiary); }
+
+  /* KpiCard — eyebrow / metric / delta / help */
+  .kpi-row { display: flex; gap: var(--gutter); margin-top: 40px; }
+  .kpi-card {
+    flex: 1;
+    background: var(--surface-muted);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+  }
+  .kpi-card .kpi-eyebrow {
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-medium);
+    color: var(--text-secondary);
+  }
+  .kpi-card .kpi-metric {
+    font-size: var(--fs-kpi);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-display);
+    letter-spacing: var(--tr-tighter);
+    font-variant-numeric: tabular-nums;
+    margin: 12px 0;
+  }
+  .kpi-card .kpi-delta {
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-bold);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .kpi-delta.up { color: var(--chart-2); }
+  .kpi-delta.down { color: var(--chart-3); }
+  .kpi-card .kpi-help { font-size: var(--fs-caption); color: var(--text-tertiary); margin-top: 12px; }
+
+  /* ChartCard — 6슬롯: title / subtitle / chart / description / source / download */
+  .chart-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-muted);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+  }
+  .chart-card .cc-title { font-size: var(--fs-h3); font-weight: var(--fw-bold); letter-spacing: var(--tr-tight); }
+  .chart-card .cc-subtitle { font-size: var(--fs-h4); color: var(--text-secondary); margin-top: 8px; }
+  .chart-card .cc-chart { flex: 1; margin: 32px 0; min-height: 0; }
+  .chart-card .cc-desc { font-size: var(--fs-body); line-height: var(--lh-tight); color: var(--text-primary); max-width: 46ch; }
+  .chart-card .cc-meta { display: flex; justify-content: space-between; margin-top: 24px; }
+  .chart-card .cc-meta .caption { color: var(--text-tertiary); }
+
+  /* 순수 SVG 막대차트 (프로덕션에서는 Recharts로 교체) */
+  .bars { display: flex; align-items: flex-end; gap: var(--gutter); height: 100%; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .bar-col .bar { width: 100%; border-radius: var(--radius-sm) var(--radius-sm) 0 0; }
+  .bar-col .bar-value { font-size: var(--fs-h4); font-weight: var(--fw-bold); margin-bottom: 12px; font-variant-numeric: tabular-nums; }
+  .bar-col .bar-label { font-size: var(--fs-caption); color: var(--text-secondary); margin-top: 16px; }
+
+  /* 네비 힌트 */
+  .nav-hint {
+    position: fixed;
+    right: 24px;
+    bottom: 20px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 14px;
+    font-family: var(--font-sans);
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+<div class="viewport">
+  <div class="stage" id="stage">
+
+    <!-- ============ 1. 표지 (cover) ============ -->
+    <section class="slide active" data-type="cover">
+      <div class="slide-body" style="justify-content: center; display: flex; flex-direction: column;">
+        <p class="eyebrow">제품 제안서 · 2026</p>
+        <h1 class="h1" style="margin-top: 24px;">한글 제안서<br />디자인 시스템 도입안</h1>
+        <p class="h3" style="margin-top: 32px; color: var(--text-secondary);">
+          투사 거리까지 고려한 한국어 발표 자료 표준
+        </p>
+      </div>
+      <div class="slide-footer">
+        <span class="caption">발표: 디자인 플랫폼팀</span>
+        <span class="caption">2026.07.01</span>
+      </div>
+    </section>
+
+    <!-- ============ 2. 본문 (body + KPI) ============ -->
+    <section class="slide" data-type="body">
+      <header class="slide-title">
+        <p class="eyebrow">문제 정의</p>
+        <h2 class="h2">외국 템플릿을 그대로 쓰면 뒷자리에서 안 읽힌다</h2>
+      </header>
+      <div class="slide-body grid-12">
+        <div class="col-7">
+          <p class="body body-block">
+            라틴 본문 크기를 그대로 옮기면 한글은 줄 밀도가 빨리 차 답답해집니다.
+            제안서는 투사 거리가 멀어 본문을 18pt 이상으로 키워야 합니다.
+          </p>
+          <ul class="bullets">
+            <li>본문 18pt · 라이브 발표 24pt 이상</li>
+            <li>본문·라벨 자간 0, 제목 예외는 검수 후 제한</li>
+            <li>왼쪽 정렬 · 불릿은 3~5개로 절제</li>
+          </ul>
+        </div>
+        <div class="col-5">
+          <div class="kpi-row" style="flex-direction: column; margin-top: 0;">
+            <div class="kpi-card">
+              <p class="kpi-eyebrow">권장 본문 크기</p>
+              <p class="kpi-metric">18<span style="font-size: 0.5em;">pt</span></p>
+              <p class="kpi-delta up">▲ 웹 대비 +1단계</p>
+              <p class="kpi-help">라이브 발표는 24pt 이상 우선</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span class="caption">한글 제안서 디자인 시스템 도입안</span>
+        <span class="caption">2 / 4</span>
+      </div>
+    </section>
+
+    <!-- ============ 3. 차트 자리 (ChartCard 6슬롯) ============ -->
+    <section class="slide" data-type="chart">
+      <header class="slide-title">
+        <p class="eyebrow">근거 데이터</p>
+        <h2 class="h2">본문 크기별 뒷자리 판독 정확도</h2>
+      </header>
+      <div class="slide-body">
+        <div class="chart-card">
+          <!-- 슬롯 1: title / 슬롯 2: subtitle -->
+          <p class="cc-title">본문 크기별 판독 정확도</p>
+          <p class="cc-subtitle">회의실 8m 거리 · 응답자 40명 기준 (%)</p>
+          <!-- 슬롯 3: chart (프로덕션은 Recharts로 교체) -->
+          <div class="cc-chart">
+            <div class="bars">
+              <div class="bar-col">
+                <span class="bar-value">61</span>
+                <div class="bar" style="height: 61%; background: var(--chart-muted);"></div>
+                <span class="bar-label">14pt</span>
+              </div>
+              <div class="bar-col">
+                <span class="bar-value">78</span>
+                <div class="bar" style="height: 78%; background: var(--chart-muted);"></div>
+                <span class="bar-label">16pt</span>
+              </div>
+              <div class="bar-col">
+                <span class="bar-value">94</span>
+                <div class="bar" style="height: 94%; background: var(--chart-focus);"></div>
+                <span class="bar-label">18pt</span>
+              </div>
+              <div class="bar-col">
+                <span class="bar-value">99</span>
+                <div class="bar" style="height: 99%; background: var(--chart-focus);"></div>
+                <span class="bar-label">24pt</span>
+              </div>
+            </div>
+          </div>
+          <!-- 슬롯 4: description (생략 불가) -->
+          <p class="cc-desc">
+            18pt부터 판독 정확도가 90%를 넘습니다. 강조 시리즈만 focus 색을 쓰고
+            나머지는 저채도로 두어 색 의존도를 낮췄습니다.
+          </p>
+          <!-- 슬롯 5: source / 슬롯 6: download (생략 불가) -->
+          <div class="cc-meta">
+            <span class="caption">출처: 사내 가독성 테스트 (2026.05)</span>
+            <span class="caption">데이터 내려받기: readability-2026.csv</span>
+          </div>
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span class="caption">한글 제안서 디자인 시스템 도입안</span>
+        <span class="caption">3 / 4</span>
+      </div>
+    </section>
+
+    <!-- ============ 4. 마무리 (closing) ============ -->
+    <section class="slide" data-type="closing">
+      <div class="slide-body" style="justify-content: center; display: flex; flex-direction: column;">
+        <p class="eyebrow">요약 · 다음 단계</p>
+        <h2 class="h2" style="margin-top: 24px; max-width: 30ch;">
+          18pt 본문과 1920×1080 고정 규칙으로 발표 자료 표준을 통일합니다
+        </h2>
+        <p class="body body-block" style="margin-top: 40px; max-width: 40ch;">
+          다음 스프린트에 템플릿을 배포하고, 기존 덱은 변환 모드로 순차 이관합니다.
+        </p>
+      </div>
+      <div class="slide-footer">
+        <span class="caption">문의: design-platform@example.com</span>
+        <span class="caption">4 / 4</span>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="nav-hint">← → 또는 Space · 키로 이동</div>
+
+<script>
+  // 스테이지를 뷰포트에 통째로 스케일 (내용 재배치 없음 — 제안서는 반응형 X)
+  var stage = document.getElementById('stage');
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.setProperty('--scale', scale);
+  }
+  window.addEventListener('resize', fit);
+  fit();
+
+  // 최소 키보드 네비게이션
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, idx) { s.classList.toggle('active', idx === current); });
+  }
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+  document.addEventListener('keydown', function (e) {
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+      case ' ': e.preventDefault(); next(); break;
+      case 'ArrowLeft':
+      case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); show(0); break;
+      case 'End': e.preventDefault(); show(slides.length - 1); break;
+    }
+  });
+  // 클릭으로도 다음 (왼쪽 1/5 영역은 이전)
+  document.querySelector('.viewport').addEventListener('click', function (e) {
+    if (e.clientX < window.innerWidth * 0.2) { prev(); } else { next(); }
+  });
+</script>
+</body>
+</html>
